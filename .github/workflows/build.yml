@@ -31,15 +31,14 @@ jobs:
       - name: Build with Maven
         run: mvn -Dmaven.test.skip=true clean package
 
-      - name: Dockerize the microservice
-        run: |
-          docker build -t test-service:v1 .
-
-      - name: Export Docker image
-        run: docker save test-service:v1 -o image-v1.tar
-
-      - name: Upload docker image
-        uses: actions/upload-artifact@v4
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
         with:
-          name: test-service-image
-          path: image-v1.tar
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/test-service:latest .
+
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/test-service:latest

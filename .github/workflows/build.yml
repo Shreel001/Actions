@@ -33,7 +33,7 @@ jobs:
 
       - name: Dockerize the microservice
         run: |
-          docker build -t test-service:@v1
+          docker build -t test-service:@v1 .
 
       - name: Export Docker image
         run: docker save test-service:@v1 -o image@v1.tar

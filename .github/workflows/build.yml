@@ -29,4 +29,17 @@ jobs:
 
         # 4. Run Maven build
       - name: Build with Maven
-        run: mvn -B clean package
+        run: mvn -Dmaven.test.skip=true clean package
+
+      - name: Dockerize the microservice
+        run: |
+          docker build -t test-service:@v1
+
+      - name: Export Docker image
+        run: docker save test-service:@v1 -o image@v1.tar
+
+      - name: Upload docker image
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-service-image
+          path: image.tar

@@ -13,11 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up JDK 26 (early access)
+      - name: Set up JDK 21 (early access)
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '26-ea'
+          java-version: '21-ea'
 
       - name: Cache Maven packages
         uses: actions/cache@v4

@@ -37,8 +37,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/test-service:latest .
+#      - name: Build Docker image
+#        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/test-service:latest .
+#
+#      - name: Push Docker image
+#        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/test-service:latest
 
-      - name: Push Docker image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/test-service:latest
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

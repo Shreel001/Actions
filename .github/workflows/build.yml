@@ -43,10 +43,10 @@ jobs:
         with:
           images: ${{ secrets.DOCKERHUB_USERNAME }}/test-service
           tags: |
-            type=branch
+            type=ref,event=branch
             type=sha
-            type=latest
             type=semver
+            type=raw,value=latest
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
